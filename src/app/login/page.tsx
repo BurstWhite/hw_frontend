@@ -4,50 +4,28 @@ import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-// import { URL } from "@/lib/url"
+import { BasicServerMiddleware } from "@/utils/connection/middleware"
 
-// 测试用
-export default function Component() {
+export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    if(username === 'burstwhite' && password === 'A8877388') {
+    const body = JSON.stringify({
+      account: username,
+      passwd: password
+    });
+
+    const middleware = new BasicServerMiddleware()
+    const response = await middleware.request('/login', {method: 'POST', body: body, headers: {
+    },})
+    if(response.status === 200) {
       window.location.href = '/dashboard'
+    } else {
+      alert('用户名或密码错误')
     }
   };
-  // const handleLogin = async () => {
-  //   try {
-  //     // 发送登录请求到服务器
-  //     const body = JSON.stringify({
-  //       "account": username,
-  //       "passwd": password,
-  //     });
-  //     console.log(body);
-  //     const response = await fetch('http://149.88.90.116:1145/login', {
-  //       method: 'POST',
-  //       // mode: 'no-cors',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': '*/*',
-  //         'Accept-Encoding': 'gzip, deflate, br'
-  //       },
-  //       body: body
-  //     })
-  //     const data = await response.text();
-  //     console.log(data);
-  //     if(!response.ok) {
-  //       throw new Error('登录失败');
-  //     }
-  //   }
-  //   catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   
-
-
-
   return (
     <div className="flex items-center min-h-screen px-4">
       <div className="mx-auto space-y-4 w-full max-w-sm">
