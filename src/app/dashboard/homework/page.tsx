@@ -76,7 +76,11 @@ export default function HomeworkPage() {
   )
 }
 
-function HomeworkCreationForm({ onClose }) {
+interface HomeworkCreationFormProps {
+  onClose: () => void;
+}
+
+function HomeworkCreationForm({ onClose }: HomeworkCreationFormProps) {
     const [subject, setSubject] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
