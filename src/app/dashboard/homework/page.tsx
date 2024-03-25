@@ -1,57 +1,51 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/j6miJL2ksVY
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+'use client'
+import SingleHomework from "@/app/dashboard/homework/singlehomework"
+import { Button } from "@/components/ui/button"
+import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
+import { useState } from "react"
+import HomeworkCreationForm from "@/app/ui/dashboard/homework/creationform"
 
-export function SingleHomework(subject : string, start_date : Date, end_date : Date) {
-    return (
-    <div className="flex items-center space-x-4">
-    <div className="grid items-start sm:grid-cols-2">
-      <div className="font-medium">{subject}</div>
-      <div className="text-sm text-gray-500 dark:text-gray-400">开始时间: {start_date.toLocaleDateString()}</div>
-    </div>
-    <div className="text-sm text-gray-500 dark:text-gray-400">结束时间: {end_date.toLocaleDateString()}</div>
-    </div>
-    )
+interface ModalProps {
+  show: boolean;
+  onClose: () => void;
+  children: JSX.Element;
 }
 
-export default function Component() {
-    return (
-      <div className="w-full py-6">
-        <div className="container grid max-w-3xl px-4 gap-6 text-sm md:gap-10">
-          <div className="space-y-1.5">
-            <h1 className="text-3xl font-bold">作业列表</h1>
-          </div>
-          <div className="space-y-1.5">
-          </div>
-            <div className="border-t w-full border-gray-200 dark:border-gray-800" />
-            <div className="flex items-center space-x-4">
-              <div className="grid items-start sm:grid-cols-2">
-                <div className="font-medium">History</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">Starts: 3/25/24</div>
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">Due: 3/30/24</div>
-            </div>
-            <div className="border-t w-full border-gray-200 dark:border-gray-800" />
-            <div className="flex items-center space-x-4">
-              <div className="grid items-start sm:grid-cols-2">
-                <div className="font-medium">Science</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">Starts: 3/27/24</div>
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">Due: 3/31/24</div>
-            </div>
-            <div className="border-t w-full border-gray-200 dark:border-gray-800" />
-            <div className="flex items-center space-x-4">
-              <div className="grid items-start sm:grid-cols-2">
-                <div className="font-medium">English</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">Starts: 3/29/24</div>
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">Due: 4/2/24</div>
-            </div>
-          </div>
-        </div>
-    )
+function Modal({ show, onClose, children }: ModalProps) {
+  if (!show) {
+      return null;
   }
-  
-  
+
+  return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+        {children}
+      </div>
+  );
+}
+
+
+export default function HomeworkPage() {
+  const [showForm, setShowForm] = useState(false);
+
+  return (
+    <div className="w-full py-6">
+      <div className="container grid max-w-3xl px-4 gap-6 text-sm md:gap-10">
+        <div className="space-y-1.5">
+          <h1 className="text-3xl font-bold">作业列表</h1>
+        </div>
+        <div className="space-y-1.5">
+          <SingleHomework subject="数学" start_date="2024-03-05" end_date="2024-03-26" />
+        </div>
+        <Modal show={showForm} onClose={() => setShowForm(false)}>
+          <HomeworkCreationForm />
+        </Modal>
+        <div className="flex justify-end">
+          <Button onClick={() => setShowForm(true)}>布置作业</Button>
+        </div>
+      </div>
+    </div>
+  )
+}
