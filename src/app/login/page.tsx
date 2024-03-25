@@ -21,7 +21,7 @@ export default function LoginPage() {
       method: "POST",
       body: body,
     });
-    if (response.status === 200) {
+    if (response.ok) {
       window.location.href = "/dashboard";
     } else {
       alert("用户名或密码错误");

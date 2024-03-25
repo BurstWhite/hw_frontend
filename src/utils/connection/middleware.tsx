@@ -13,8 +13,7 @@ export class BasicServerMiddleware implements ServerMiddleware {
       'Connection': 'keep-alive',
       ...options.headers,
     };
-    console.log(`Sending request to ${API_ENDPOINT}${url}`);
-    console.log(`Headers: ${JSON.stringify(headers)}`);
+
     const response = await fetch(`${API_ENDPOINT}${url}`, {
       ...options,
       headers,

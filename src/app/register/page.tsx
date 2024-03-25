@@ -23,7 +23,7 @@ export default function RegisterPage() {
     const middleware = new BasicServerMiddleware()
     const response = await middleware.request('/register', {method: 'POST', body: body})
     if(response.status === 200) {
-      alert('注册成功')
+      alert('注册成功, 即将跳转到登录页面')
       window.location.href = '/login'
     } else {
       alert('注册失败')

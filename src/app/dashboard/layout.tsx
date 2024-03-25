@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-export default function DashLayout() {
+export default function DashLayout({children}: {children: React.ReactNode}) {
   return (
+  <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
     <aside className="h-screen w-56 bg-gray-100 text-gray-800 p-4">
       <div className="flex items-center mb-4 space-x-1">
         <Image
@@ -47,5 +48,7 @@ export default function DashLayout() {
         </Link>
       </nav>
     </aside>
+    <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+  </div>
   );
 };
