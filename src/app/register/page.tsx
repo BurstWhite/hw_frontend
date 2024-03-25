@@ -1,32 +1,35 @@
-'use client'
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { BasicServerMiddleware } from "@/utils/connection/middleware"
+"use client";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { BasicServerMiddleware } from "@/utils/connection/middleware";
 
 export default function RegisterPage() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = async () => {
-    if(password !== confirmPassword) {
-      alert('两次密码输入不一致')
-      return
-    };
+    if (password !== confirmPassword) {
+      alert("两次密码输入不一致");
+      return;
+    }
     const body = JSON.stringify({
       account: username,
-      passwd: password
+      passwd: password,
     });
 
-    const middleware = new BasicServerMiddleware()
-    const response = await middleware.request('/register', {method: 'POST', body: body})
-    if(response.status === 200) {
-      alert('注册成功, 即将跳转到登录页面')
-      window.location.href = '/login'
+    const middleware = new BasicServerMiddleware();
+    const response = await middleware.request("/register", {
+      method: "POST",
+      body: body,
+    });
+    if (response.status === 200) {
+      alert("注册成功, 即将跳转到登录页面");
+      window.location.href = "/login";
     } else {
-      alert('注册失败')
+      alert("注册失败");
     }
   };
 
@@ -79,4 +82,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-

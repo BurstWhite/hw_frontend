@@ -8,13 +8,10 @@ export default function WelcomePage() {
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl lg:text-6xl/none">
               欢迎使用
             </h1>
-            <p className="max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-              
-            </p>
+            <p className="max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400"></p>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
-

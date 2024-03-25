@@ -1,42 +1,55 @@
-'use client'
-import { Label } from "@/components/ui/label"
-import { SelectValue, SelectTrigger, SelectItem, SelectGroup, SelectContent, Select } from "@/components/ui/select"
-import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
-import { useState } from "react"
-import { BasicServerMiddleware } from "@/utils/connection/middleware"
-import Subjects from "@/utils/homework"
+"use client";
+import { Label } from "@/components/ui/label";
+import {
+  SelectValue,
+  SelectTrigger,
+  SelectItem,
+  SelectGroup,
+  SelectContent,
+  Select,
+} from "@/components/ui/select";
+import {
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableCell,
+  TableBody,
+  Table,
+} from "@/components/ui/table";
+import { useState } from "react";
+import { BasicServerMiddleware } from "@/utils/connection/middleware";
+import Subjects from "@/utils/homework";
 
 export default function SubmissionPage() {
-  const [homeworks, setHomeworks] = useState([])
-  const [students, setStudents] = useState([])
-  const [fetched, setFetched] = useState(false)
+  const [homeworks, setHomeworks] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [fetched, setFetched] = useState(false);
 
   const handleHomeworkFetch = async () => {
-    const middleware = new BasicServerMiddleware()
-    const response = await middleware.request('/gethomework?id=30', {
-      method: 'GET'
+    const middleware = new BasicServerMiddleware();
+    const response = await middleware.request("/gethomework?id=30", {
+      method: "GET",
     });
     if (response.ok) {
       const json = await response.json();
-      setHomeworks(json['data'])
+      setHomeworks(json["data"]);
     }
-
-  }
+  };
 
   const handleHomeworkChange = async (value: number) => {
-    const middleware = new BasicServerMiddleware()
-    const response = await middleware.request('/students?class=12', {
-      method: 'GET'
+    const middleware = new BasicServerMiddleware();
+    const response = await middleware.request("/students?class=12", {
+      method: "GET",
     });
     if (response.ok) {
       const json = await response.json();
-      setStudents(json['students'])
+      setStudents(json["students"]);
     }
-  }
+  };
 
   if (!fetched) {
-    setFetched(true)
-    handleHomeworkFetch()
+    setFetched(true);
+    handleHomeworkFetch();
   }
 
   return (
@@ -57,8 +70,15 @@ export default function SubmissionPage() {
               <SelectContent>
                 <SelectGroup>
                   {homeworks.map((homework: any) => (
-                    <SelectItem key={homework.homework_id} value={homework.homework_id} onMouseDown={() => handleHomeworkChange(homework.homework_id)}>
-                      {Subjects[homework.submission_required.slice(0, 1)]} 作业 {homework.end_date.slice(0, 10)}截止
+                    <SelectItem
+                      key={homework.homework_id}
+                      value={homework.homework_id}
+                      onMouseDown={() =>
+                        handleHomeworkChange(homework.homework_id)
+                      }
+                    >
+                      {Subjects[homework.submission_required.slice(0, 1)]} 作业{" "}
+                      {homework.end_date.slice(0, 10)}截止
                     </SelectItem>
                   ))}
                 </SelectGroup>
@@ -75,20 +95,22 @@ export default function SubmissionPage() {
           </TableHeader>
           <TableBody>
             {students.map((student: any) => (
-            <TableRow key={student.school_id}>
-              <TableCell className="flex items-center gap-4">
-                <div>
-                  <div className="font-medium">{student.name}</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">12班</div>
-                </div>
-              </TableCell>
-              <TableCell>2 小时前</TableCell>
-              <TableCell className="flex gap-2" />
-            </TableRow>
+              <TableRow key={student.school_id}>
+                <TableCell className="flex items-center gap-4">
+                  <div>
+                    <div className="font-medium">{student.name}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                      12班
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell>2 小时前</TableCell>
+                <TableCell className="flex gap-2" />
+              </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
     </div>
-  )
+  );
 }
