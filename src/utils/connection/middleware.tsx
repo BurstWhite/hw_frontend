@@ -14,6 +14,8 @@ export class BasicServerMiddleware implements ServerMiddleware {
       ...options.headers,
     };
 
+    // console.log(`${API_ENDPOINT}${url}`, headers);
+
     const response = await fetch(`${API_ENDPOINT}${url}`, {
       ...options,
       headers,
